@@ -1,3 +1,2 @@
-# project-1
-Project Name: Student Reflection Journal Website
-Purpose: The website serves as a platform for students to log in, create accounts, and write  learning journals to document their learning experiences.
+# Reflection Journal API
+This is the backend API for the reflection journal web application.
