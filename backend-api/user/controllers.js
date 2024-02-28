@@ -1,4 +1,4 @@
-const db = require("../routes/db-connection");
+const db = require("../database/db-connection");
 const dbTableName = "user_profile";
 
 /**
