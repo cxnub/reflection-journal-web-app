@@ -1,31 +1,23 @@
-import dbConfig from "../config/db.config";
+import mysql2 from 'mysql2/promise';
+import dbConfig from '../config/db.config';
 
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+const pool = mysql2.createPool({
   host: dbConfig.HOST,
-  dialect: dbConfig.dialect,
-  operatorsAliases: false,
-
-  pool: {
-    max: dbConfig.pool.max,
-    min: dbConfig.pool.min,
-    acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle,
-  },
+  user: dbConfig.USER,
+  password: dbConfig.PASSWORD,
+  database: dbConfig.DB,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-const db: any = {};
+// test the connection
+pool.query('SELECT 1 + 1 AS solution', (error, results, _fields) => {
+  if (error) {
+    console.error("Error connecting to MySQL: " + error.stack);
+    return;
+  }
+  console.log("Connected to MySQL as id " + results[0].solution);
+});
 
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-
-db.sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection has been established successfully.");
-  })
-  .catch((error) => {
-    console.error("Unable to connect to the database: ", error);
-  });
-
-export default db;
+export default pool;
