@@ -1,4 +1,4 @@
-class User {
+export default class UserProfile {
   id: number;
   name: string;
   created_at: string;
