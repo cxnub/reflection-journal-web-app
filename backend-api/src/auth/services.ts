@@ -25,9 +25,9 @@ async function createUserAccount(
 INSERT INTO ${dbTableName} (email, hashed_password, salt)
 VALUES (?, ?, ?)
     `;
-    
+
     const result = await conn.query(sql, [email, hashedPassword, salt]);
-    return new userAccount(JSON.parse(JSON.stringify(result[0][0])));
+    return await getUserAccountByEmail(email);
 }
 
 export { getUserAccountByEmail, createUserAccount };
