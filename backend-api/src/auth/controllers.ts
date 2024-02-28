@@ -1,7 +1,7 @@
 import express from 'express';
 import { getUserAccountByEmail, createUserAccount } from './services';
 import { hashPassword, comparePassword } from '../utils/password-utils';
-import userAccount from '../models/user-account';
+import { generateToken } from '../utils/jwt-utils';
 
 async function register(req: express.Request, res: express.Response) {
     // Get email and password from request body
@@ -25,8 +25,13 @@ async function register(req: express.Request, res: express.Response) {
     // If email is not in use, hash the password and create the user account
     const [salt, hashedPassword] = hashPassword(password);
 
-    await createUserAccount(email, hashedPassword, salt);
-    res.status(201).json({ message: "User account created" });
+    const newAccount = await createUserAccount(email, hashedPassword, salt);
+
+    res.status(201).json({
+        status: "success",
+        message: "User account created",
+        token: generateToken(newAccount)
+    });
 }
 
 async function login(req: express.Request, res: express.Response) {
@@ -34,22 +39,24 @@ async function login(req: express.Request, res: express.Response) {
 
     if (email === undefined || password === undefined) {
         res.status(400).json({ message: "Undefined email or password" });
+        return;
     }
 
     const account = await getUserAccountByEmail(email);
 
     if (!account) {
-        res.status(401).json({ message: "Invalid email or password" });
+        res.status(403).json({ message: "Invalid email or password" });
         return;
     }
 
     if (comparePassword(password, account)) {
-        res.status(200).json({ message: "Login successful" });
+        res.status(200).json({
+            status: "success",
+            message: "Login successful",
+            token: generateToken(account)
+            });
         return;
     }
-
-    res.status(401).json({ message: "Invalid email or password" });
-    return;
 }
 
 export { register, login };

@@ -14,10 +14,20 @@ async function getUserAccountByEmail(email: string): Promise<userAccount | null>
     }
 }
 
-    async function createUserAccount(email, hashedPassword, salt) {
-        const conn = await connect();
-        const sql = `INSERT INTO ${dbTableName} (email, hashed_password, salt) VALUES (?, ?, ?)`;
-        return await conn.query(sql, [email, hashedPassword, salt]);
-    }
+async function createUserAccount(
+    email: string,
+    hashedPassword: string,
+    salt: string
+    ): Promise<userAccount> {
+    const conn = await connect();
 
-    export { getUserAccountByEmail, createUserAccount };
+    const sql = `
+INSERT INTO ${dbTableName} (email, hashed_password, salt)
+VALUES (?, ?, ?)
+    `;
+    
+    const result = await conn.query(sql, [email, hashedPassword, salt]);
+    return new userAccount(JSON.parse(JSON.stringify(result[0][0])));
+}
+
+export { getUserAccountByEmail, createUserAccount };
