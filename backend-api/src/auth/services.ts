@@ -1,4 +1,4 @@
-const db = require("../database/db-connection");
+import db from "../database/db-connection";
 const dbTableName = "user_account";
 
 function getUserAccountByEmail(email) {
@@ -11,7 +11,4 @@ function createUserAccount(email, hashedPassword, salt) {
   return db.promise().query(sql, [email, hashedPassword, salt]);
 }
 
-module.exports = {
-    getUserAccountByEmail,
-    createUserAccount
-};
+export { getUserAccountByEmail, createUserAccount };

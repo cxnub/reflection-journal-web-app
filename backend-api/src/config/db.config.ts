@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
   HOST: "localhost",
   USER: "root",
   PASSWORD: "password",
@@ -9,5 +9,7 @@ module.exports = {
     min: 0,
     acquire: 30000,
     idle: 10000,
-  },
+  }
 };
+
+export default config;
