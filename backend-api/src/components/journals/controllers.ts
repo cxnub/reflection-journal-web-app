@@ -1,5 +1,6 @@
 import express from "express";
 import db from "./services";
+import { ExpressValidator, validationResult } from "express-validator";
 
 export async function getJournalById(req: express.Request, res: express.Response) {
     const id = parseInt(req.params.id);
@@ -13,8 +14,11 @@ export async function getJournalById(req: express.Request, res: express.Response
 }
 
 export async function createJournal(req: express.Request, res: express.Response) {
-    const { user_account_id, title, content } = req.body;
+    if (!validationResult(req).isEmpty()) {
+        return res.status(400).json(validationResult(req));
+    }
+    const { user_account_id, title, content, privacy_settings } = req.body;
 
-    const journal = await db.createJournal(user_account_id, title, content);
+    const journal = await db.createJournal(user_account_id, title, content, privacy_settings);
     res.status(201).json(journal);
 }
