@@ -29,8 +29,7 @@ async function register(req: express.Request, res: express.Response) {
 
     res.status(201).json({
         status: "success",
-        message: "User account created",
-        token: generateToken(newAccount)
+        message: "User account created"
     });
 }
 
