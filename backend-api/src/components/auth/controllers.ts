@@ -1,7 +1,7 @@
 import express from 'express';
 import * as services from './services';
-import { hashPassword, comparePassword } from '../utils/password-utils';
-import { generateToken } from '../utils/jwt-utils';
+import { hashPassword, comparePassword } from '../../utils/password-utils';
+import { generateToken } from '../../utils/jwt-utils';
 
 async function register(req: express.Request, res: express.Response, next: express.NextFunction) {
     try {

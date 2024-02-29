@@ -1,11 +1,11 @@
 import { error } from "console";
-import connect from "../database/db-connection";
-import userAccount from "../models/user-account";
+import connect from "../../database/db-connection";
+import userAccount from "../../models/user-account";
 const dbTableName = "user_account";
 
 async function getUserAccountByEmail(email: string): Promise<userAccount | null> {
     const conn = await connect();
-    const sql = `SELECTs * FROM ${dbTableName} WHERE email = ?`;
+    const sql = `SELECT * FROM ${dbTableName} WHERE email = ?`;
     const result = await conn.query(sql, [email]);
 
     if (Array.isArray(result[0]) && result[0].length > 0) {

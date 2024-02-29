@@ -1,11 +1,18 @@
-import connect from "../database/db-connection";
-import { Journal, CreateJournalSchema } from "../models/journal";
+import connect from "../../database/db-connection";
+import { Journal, CreateJournalSchema } from "../../models/journal";
 const dbTableName = "journal";
 
 async function getJournalById(id: number): Promise<Journal | null> {
-    const conn = await connect();
-    const sql = `SELECT * FROM ${dbTableName} WHERE id = ?`;
-    const result = await conn.query(sql, [id]);
+    var result = null;
+    try {
+        const conn = await connect();
+        const sql = `SELECT * FROM ${dbTableName} WHERE id = ?`;
+        result = await conn.query(sql, [id]);
+
+    } catch (error) {
+        console.error("Error executing query", error);
+        throw new error;
+    }
 
     if (Array.isArray(result[0]) && result[0].length > 0) {
         return new Journal(JSON.parse(JSON.stringify(result[0][0])));

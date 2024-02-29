@@ -1,10 +1,10 @@
 import express, { Express, Request, Response } from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import authRouter from "./auth/routes";
-import journalRouter from "./journals/routes";
+import authRouter from "./components/auth/routes";
+import journalRouter from "./components/journals/routes";
 import { auth } from "./middleware/auth";
-import userRouter from "./users/routes";
+import userRouter from "./components/users/routes";
 import { errorHandler } from "./middleware/error-handler";
 import createHttpError from "http-errors";
 

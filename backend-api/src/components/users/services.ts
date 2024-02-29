@@ -1,5 +1,5 @@
-import connect from "../database/db-connection";
-import UserProfile from "../models/user-profile";
+import connect from "../../database/db-connection";
+import UserProfile from "../../models/user-profile";
 const dbTableName = "user_profile";
 
 /**
