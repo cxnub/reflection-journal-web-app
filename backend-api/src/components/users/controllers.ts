@@ -1,30 +1,36 @@
 import express from "express";
-import {
-  createUserProfile,
-  findAllUserProfiles,
-  findUserProfileByPk,
-} from "./services";
+import * as services from "./services";
+import UserProfile from "../../models/user-profile";
 
-export async function getAllUsers(
+export async function getAllUserProfiles(
   _req: express.Request,
-  res: express.Response
+  res: express.Response,
+  next: express.NextFunction
 ) {
   try {
-    const usersProfiles = await findAllUserProfiles();
+    const userProfiles = await services.getAllUserProfiles();
+    if (!userProfiles) {
+      return res
+        .status(404)
+        .json({ status: "fail", message: "User profiles not found" });
+    }
     res.status(200).json({
       status: "success",
       message: "User profiles fetched",
-      profiles: usersProfiles,
+      profiles: userProfiles,
     });
   } catch (error) {
-    console.error("Error executing query: ", error.stack);
-    res.status(500).json({ status: "fail", message: "Internal Server Error" });
+    next(error);
   }
 }
 
-export async function getUser(req: express.Request, res: express.Response) {
+export async function getUserProfileById(
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) {
   try {
-    const userProfile = await findUserProfileByPk(req.params.id);
+    const userProfile = await services.getUserProfileById(req.params.id);
     if (!userProfile) {
       return res
         .status(404)
@@ -36,22 +42,24 @@ export async function getUser(req: express.Request, res: express.Response) {
       profile: userProfile,
     });
   } catch (error) {
-    console.error("Error executing query: ", error.stack);
-    res.status(500).json({ status: "fail", message: "Internal Server Error" });
+    next(error);
   }
 }
 
-export async function addUser(req: express.Request, res: express.Response) {
+export async function createUserProfile(
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) {
   try {
-    const { username, created_at, image_url } = req.body;
-    const userProfile = await createUserProfile(req.body);
+    const newUserProfile = new UserProfile(req.body);
+    await services.createUserProfile(newUserProfile);
     res.status(201).json({
       status: "success",
       message: "User profile created",
-      profile: userProfile,
+      profile: newUserProfile,
     });
   } catch (error) {
-    console.error("Error executing query: ", error.stack);
-    res.status(500).json({ status: "fail", message: "Internal Server Error" });
+    next(error);
   }
 }
