@@ -4,6 +4,9 @@ import dotenv from "dotenv";
 import authRouter from "./auth/routes";
 import journalRouter from "./journals/routes";
 import { auth } from "./middleware/auth";
+import userRouter from "./users/routes";
+import { errorHandler } from "./middleware/error-handler";
+import createHttpError from "http-errors";
 
 dotenv.config();
 
@@ -17,7 +20,14 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/auth", authRouter);
-app.use("/api/journal", auth, journalRouter);
+app.use("/api/journals", auth, journalRouter);
+app.use("/api/users", auth, userRouter);
+
+app.use(function(req, res, next) {
+  next(createHttpError(404));
+});
+
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
