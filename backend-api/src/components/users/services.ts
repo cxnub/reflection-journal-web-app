@@ -5,20 +5,28 @@ const dbTableName = "user_profile";
 /**
  * Gets all user profiles.
  */
-export async function findAllUserProfiles() {
+export async function getAllUserProfiles() {
   const conn = await connect();
   const sql = `SELECT * FROM ${dbTableName}`;
   const result = await conn.query(sql);
-  return result;
+
+  if (Array.isArray(result[0]) && result[0].length > 0) {
+    const userProfiles: UserProfile[] = result[0].map(
+      (row: any) => new UserProfile(JSON.parse(JSON.stringify(row)))
+    );
+    return userProfiles;
+  } else {
+    return null;
+  }
 }
 
 /**
  * Gets a user profile by id.
  *
  * @param {string} id The user account id
- * @returns {Promise<UserProfile | null>} Promise object represents the user profile if found, else `null`.
+ * @returns {Promise<UserProfile | null>} Promise object represents the user profile if found, else `null`
  */
-export async function findUserProfileByPk(
+export async function getUserProfileById(
   id: string
 ): Promise<UserProfile | null> {
   const conn = await connect();
@@ -38,10 +46,14 @@ export async function findUserProfileByPk(
  */
 export async function createUserProfile(data: UserProfile) {
   const conn = await connect();
-  const sql = `INSERT INTO ${dbTableName} (username, created_at, image_url) VALUES (?, ?, ?)`;
-  const parameters = [data.username, data.created_at, data.image_url];
-  const result = await conn.query(sql, [parameters]);
-  return result;
+  const sql = `INSERT INTO ${dbTableName} (user_account_id, username, created_at, image_url) VALUES (?, ?, ?, ?)`;
+  const parameters = [
+    data.user_account_id,
+    data.username,
+    data.created_at,
+    data.image_url,
+  ];
+  return await conn.query(sql, [parameters]);
 }
 
 /**
@@ -51,7 +63,7 @@ export async function createUserProfile(data: UserProfile) {
  * @param {UserProfile} data The user profile details
  */
 export async function editUserProfile(id: string, data: UserProfile) {
-  null;
+  throw Error("Method is not implemented.");
 }
 
 /**
@@ -60,5 +72,5 @@ export async function editUserProfile(id: string, data: UserProfile) {
  * @param {string} id The user account id
  */
 export async function deleteUserProfile(id: string) {
-  null;
+  throw Error("Method is not implemented.");
 }
