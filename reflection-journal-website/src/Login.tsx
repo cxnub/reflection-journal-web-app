@@ -1,4 +1,4 @@
-import './css/Login.css'
+import "./css/Login.css";
 
 function Login() {
   return (
@@ -18,7 +18,13 @@ function Login() {
                     <label className="form-label text-white">Username:</label>
                   </div>
                   <div>
-                    <input type="text" id="email" name="email"  placeholder = "email"></input><br></br>
+                    <input
+                      type="text"
+                      id="email"
+                      name="email"
+                      placeholder="email"
+                    ></input>
+                    <br></br>
                   </div>
                 </div>
                 <div className="form-group">
@@ -26,7 +32,12 @@ function Login() {
                     <label className="form-label text-white">Password:</label>
                   </div>
                   <div>
-                    <input type="text" id="password" name="password" placeholder = "password"></input>
+                    <input
+                      type="text"
+                      id="password"
+                      name="password"
+                      placeholder="password"
+                    ></input>
                   </div>
                 </div>
                 <div className="form-group">
@@ -37,8 +48,11 @@ function Login() {
                 <button type="submit" className="btn btn-light">
                   Create Account
                 </button>
-                <button id ="new_account" onClick={New_Account}>Create Account</button>
-            {/*<button id ="login" onClick={MyButton}>Login</button>*/}
+                <button id="new_account" onClick={New_Account}>
+                  Create Account
+                </button>
+                {/*<button id ="login" onClick={MyButton}>Login</button>*/}
+              </form>
             </div>
           </div>
         </div>
@@ -46,7 +60,7 @@ function Login() {
     </>
   );
 }
-function New_Account(){
-    window.location.replace('http://localhost:5173/index.html')
+function New_Account() {
+  window.location.replace("http://localhost:5173/index.html");
 }
 export default Login;
