@@ -1,0 +1,27 @@
+/*backgrounds*/
+.background-color-lightskin{
+    background-color: #D9967E;
+}
+
+/* Layout*/
+.container-fluid {
+    min-height: 100vh; /* make the container fill the viewport height */
+    display: flex; /* use grid layout */
+    align-items: center; /* center the items vertically */
+    justify-content: center; /* center the items horizontally */
+    
+}
+
+
+.login-form{
+    background-color: #733527;
+    margin: 10%;
+    padding: 10;
+    background-size: cover;
+}
+
+.input {
+    width: 80%;
+    margin: 10px; /* set the margin to 10 pixels on all sides */
+    padding: 5px; /* set the padding to 5 pixels on all sides */
+}
