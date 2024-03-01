@@ -7,6 +7,7 @@ import { auth } from "./middleware/auth";
 import { userRouter } from "./components/users/routes";
 import createHttpError from "http-errors";
 import { errorHandler } from "./middleware/error-handler";
+import { likeRouter } from "./components/likes/routes";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/journals", auth, journalRouter);
 app.use("/api/users", auth, userRouter);
 app.use("/api/comments", auth, journalRouter);
+app.use("/api/likes", auth, likeRouter);
 
 app.use(function(req, res, next) {
   next(createHttpError(404));
