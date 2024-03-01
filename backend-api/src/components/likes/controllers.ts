@@ -35,3 +35,23 @@ export async function unlikeJournal(
         next(error);
     }
 }
+
+export async function getLikesByJournalId(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+) {
+    try {
+        const journalId = parseInt(req.params.id);
+
+        const likes = await db.getLikesByJournalId(journalId);
+
+        res.status(200).json({
+            status: "success",
+            amount: likes.length,
+            likes: likes
+        });
+    } catch (error) {
+        next(error);
+    }
+}
