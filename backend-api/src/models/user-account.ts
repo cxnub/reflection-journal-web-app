@@ -1,3 +1,5 @@
+import { Schema } from "express-validator";
+
 type UserAccountJson = {
     id: number;
     email: string;

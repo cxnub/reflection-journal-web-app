@@ -1,4 +1,4 @@
-type UserProfileJson = {
+export type UserProfileJson = {
   user_account_id: number;
   username: string;
   created_at: string;
