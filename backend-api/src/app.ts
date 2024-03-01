@@ -16,7 +16,7 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (_req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
 });
 
@@ -26,7 +26,7 @@ app.use("/api/users", auth, userRouter);
 app.use("/api/comments", auth, journalRouter);
 app.use("/api/likes", auth, likeRouter);
 
-app.use(function(req, res, next) {
+app.use((_req, _res, next) => {
   next(createHttpError(404));
 });
 
