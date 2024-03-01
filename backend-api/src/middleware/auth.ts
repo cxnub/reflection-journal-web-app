@@ -6,7 +6,7 @@ export interface CustomRequest extends Request {
     token: string | JwtPayload;
 }
 
-async function auth(req: Request, res: Response, next: NextFunction) {
+export async function auth(req: Request, res: Response, next: NextFunction) {
     try {
         const token = req.headers.authorization.replace('Bearer ', '');
 
@@ -19,8 +19,6 @@ async function auth(req: Request, res: Response, next: NextFunction) {
 
         next();
     } catch (err) {
-        res.status(401).send('Please authenticate');
+        res.status(401).json({ message: 'Please authenticate' });
     }
 };
-
-export { auth };
