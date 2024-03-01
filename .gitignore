@@ -1,5 +1,5 @@
-# config files
-backend-api/src/config/*
+# env
+.env
 
 # Logs
 logs
