@@ -1,8 +1,8 @@
 import connect from "../../database/db-connection";
-import { Journal } from "../../models/journal";
+import { Journal, JournalJson } from "../../models/journal";
 const dbTableName = "journal";
 
-async function getJournalById(id: number): Promise<Journal | null> {
+export async function getJournalById(id: number): Promise<Journal | null> {
     var result = null;
     try {
         const conn = await connect();
@@ -10,7 +10,6 @@ async function getJournalById(id: number): Promise<Journal | null> {
         result = await conn.query(sql, [id]);
         console.log("result", result);
     } catch (error) {
-        console.error("Error executing query", error);
         throw new error;
     }
 
@@ -21,7 +20,27 @@ async function getJournalById(id: number): Promise<Journal | null> {
     }
 }
 
-async function createJournal(
+export async function getAllJournalsByUserId(user_account_id: number): Promise<Journal[] | null> {
+    var result = null;
+    try {
+        const conn = await connect();
+        const sql = `SELECT * FROM ${dbTableName} WHERE user_account_id = ?`;
+        result = await conn.query(sql, [user_account_id]);
+        console.log("result", result);
+    } catch (error) {
+        console.error("Error executing query", error);
+        throw new error;
+    }
+
+    if (Array.isArray(result[0]) && result[0].length > 0) {
+        var journalJsons = Array(JSON.parse(JSON.stringify(result[0])));
+        return journalJsons.map((journalJson) => new Journal(journalJson));
+    } else {
+        return null;
+    }
+}
+
+export async function createJournal(
     user_account_id: number,
     title: string,
     content: string,
@@ -42,5 +61,3 @@ SELECT * FROM ${dbTableName} WHERE id = LAST_INSERT_ID();
     const result = await conn.query(sql, [user_account_id, title, content, privacy_settings, created_at]);
     return new Journal(JSON.parse(JSON.stringify(result[0][1][0])));
 }
-
-export default { getJournalById, createJournal };

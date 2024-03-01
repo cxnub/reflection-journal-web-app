@@ -1,11 +1,10 @@
 import express from 'express';
-import { getJournalById, createJournal } from './controllers';
-import { checkSchema } from 'express-validator';
-import { createJournalSchema } from '../../models/journal';
+import { getJournalById, createJournal, getAllJournalsByUserId } from './controllers';
+import { validationHandler } from '../../middleware/validation-handler';
+import { createJournalSchema } from './schemas';
 
-const journalRouter = express.Router();
+export const journalRouter = express.Router();
 
 journalRouter.get('/:id', getJournalById);
-journalRouter.post('/', checkSchema(createJournalSchema, ['body']), createJournal);
-
-export default journalRouter;
+journalRouter.get('/getAlljournalsByUserId/:id', getAllJournalsByUserId)
+journalRouter.post('/', ...validationHandler(createJournalSchema), createJournal);
