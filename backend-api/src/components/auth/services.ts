@@ -1,9 +1,30 @@
-import { error } from "console";
 import connect from "../../database/db-connection";
 import userAccount from "../../models/user-account";
+import UserProfile, { UserProfileJson } from "../../models/user-profile";
 const dbTableName = "user_account";
 
-async function getUserAccountByEmail(email: string): Promise<userAccount | null> {
+/**
+ * Creates a new user profile.
+ *
+ * @param {user_account_id} number The unique identifier for the user.
+ * @param {username} string The username.
+ * @param {image_url} string The profile image URL.
+ */
+async function createUserProfile(userAccountId: number, username: string, image_url: string) {
+    const conn = await connect();
+    const sql = `
+INSERT INTO user_profile (user_account_id, username, created_at, image_url)
+VALUES (?, ?, NOW(), ?);
+SELECT * FROM user_profile WHERE user_account_id = ?;
+`;
+
+    const result = await conn.query(sql, [userAccountId, username, image_url, userAccountId]);
+    console.log(typeof result[0])
+
+    return new UserProfile(JSON.parse(JSON.stringify(result[0])));
+}
+
+export async function getUserAccountByEmail(email: string): Promise<userAccount | null> {
     const conn = await connect();
     const sql = `SELECT * FROM ${dbTableName} WHERE email = ?`;
     const result = await conn.query(sql, [email]);
@@ -15,10 +36,12 @@ async function getUserAccountByEmail(email: string): Promise<userAccount | null>
     }
 }
 
-async function createUserAccount(
+export async function createUserAccount(
     email: string,
     hashedPassword: string,
-    salt: string
+    salt: string,
+    username: string,
+    image_url: string
 ): Promise<userAccount> {
     const conn = await connect();
 
@@ -29,7 +52,10 @@ SELECT * FROM ${dbTableName} WHERE id = LAST_INSERT_ID();
     `;
 
     const result = await conn.query(sql, [email, hashedPassword, salt]);
-    return JSON.parse(JSON.stringify(result[0][1][0]));
-}
+    const newUserAccount = new userAccount(JSON.parse(JSON.stringify(result[0][1][0])));
 
-export { getUserAccountByEmail, createUserAccount };
+    // create new user profile
+    await createUserProfile(newUserAccount.id, username, image_url);
+
+    return newUserAccount;
+}

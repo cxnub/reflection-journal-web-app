@@ -1,10 +1,9 @@
 import express from 'express';
 import { login, register } from './controllers';
+import { validationHandler } from '../../middleware/validation-handler';
+import { createUserAccountSchema, loginSchema } from './schemas';
 
-const authRouter = express.Router();
+export const authRouter = express.Router();
 
-authRouter.post('/register', register);
-authRouter.post('/login', login);
-
-
-export default authRouter;
+authRouter.post('/register', ...validationHandler(createUserAccountSchema), register);
+authRouter.post('/login', ...validationHandler(loginSchema), login);
