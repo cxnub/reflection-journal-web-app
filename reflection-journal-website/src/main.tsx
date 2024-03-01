@@ -1,16 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./pages/App.tsx";
+import App from "./App.tsx";
 import "./css/index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
-);
-
-ReactDOM.createRoot(document.getElementById("login")!).render(
-  <React.StrictMode>
-    <Login />
   </React.StrictMode>
 );
