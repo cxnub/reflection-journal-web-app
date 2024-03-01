@@ -1,7 +1,8 @@
 import express from "express";
 import * as db from "./services";
+import { CustomRequest } from "../../middleware/auth";
 
-export async function getJournalById(req: express.Request, res: express.Response, next: express.NextFunction) {
+export async function getJournalById(req: CustomRequest, res: express.Response, next: express.NextFunction) {
     try {
         const id = parseInt(req.params.id);
         const journal = await db.getJournalById(id);
@@ -16,7 +17,7 @@ export async function getJournalById(req: express.Request, res: express.Response
     }
 }
 
-export async function getAllJournalsByUserId(req: express.Request, res: express.Response, next: express.NextFunction) {
+export async function getAllJournalsByUserId(req: CustomRequest, res: express.Response, next: express.NextFunction) {
 
     try {
         const id = parseInt(req.params.id);
@@ -33,9 +34,10 @@ export async function getAllJournalsByUserId(req: express.Request, res: express.
     
 }
 
-export async function createJournal(req: express.Request, res: express.Response, next: express.NextFunction) {
+export async function createJournal(req: CustomRequest, res: express.Response, next: express.NextFunction) {
     try {
-        const { user_account_id, title, content, privacy_settings } = req.body;
+        const { title, content, privacy_settings } = req.body;
+        const user_account_id = req.user_account_id;
 
         const journal = await db.createJournal(user_account_id, title, content, privacy_settings);
         res.status(201).json(journal);

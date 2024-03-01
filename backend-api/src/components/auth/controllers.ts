@@ -2,8 +2,9 @@ import express from 'express';
 import * as db from './services';
 import { hashPassword, comparePassword } from '../../utils/password-utils';
 import { generateToken } from '../../utils/jwt-utils';
+import { CustomRequest } from '../../middleware/auth';
 
-export async function register(req: express.Request, res: express.Response, next: express.NextFunction) {
+export async function register(req: CustomRequest, res: express.Response, next: express.NextFunction) {
     try {
         // Get email and password from request body
         const { email, password, username, image_url } = req.body;
@@ -31,7 +32,7 @@ export async function register(req: express.Request, res: express.Response, next
     }
 }
 
-export async function login(req: express.Request, res: express.Response, next: express.NextFunction) {
+export async function login(req: CustomRequest, res: express.Response, next: express.NextFunction) {
 
         try {
             const { email, password } = req.body;

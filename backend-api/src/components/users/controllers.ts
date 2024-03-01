@@ -1,9 +1,10 @@
 import express from "express";
 import * as db from "./services";
 import UserProfile from "../../models/user-profile";
+import { CustomRequest } from "../../middleware/auth";
 
 export async function getAllUserProfiles(
-    _req: express.Request,
+    _req: CustomRequest,
     res: express.Response,
     next: express.NextFunction
 ) {
@@ -25,7 +26,7 @@ export async function getAllUserProfiles(
 }
 
 export async function getUserProfileById(
-    req: express.Request,
+    req: CustomRequest,
     res: express.Response,
     next: express.NextFunction
 ) {
