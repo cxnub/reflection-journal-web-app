@@ -2,8 +2,13 @@ import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import jwtConfig from '../config/jwt.config';
 
+declare module "jsonwebtoken" {
+    export interface JwtPayload {
+        user_account_id: number;
+    }
+}
 export interface CustomRequest extends Request {
-    token: string | JwtPayload;
+    user_account_id: number;
 }
 
 export async function auth(req: Request, res: Response, next: NextFunction) {
@@ -14,8 +19,8 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
             throw new Error();
         }
 
-        const decoded = jwt.verify(token, jwtConfig.SECRET);
-        (req as CustomRequest).token = decoded;
+        const decoded = <JwtPayload>jwt.verify(token, jwtConfig.SECRET);
+        (req as CustomRequest).user_account_id = decoded.user_account_id;
 
         next();
     } catch (err) {

@@ -1,19 +1,6 @@
 import { Schema } from "express-validator";
 
 export const createJournalSchema: Schema = {
-    user_account_id: {
-        exists: {
-            errorMessage: "Missing user account id."
-        
-        },
-        notEmpty: {
-            errorMessage: "User account id cannot be empty."
-        },
-        isInt: {
-            options: { min: 1 },
-            errorMessage: "User account id must be an integer."
-        }
-    },
     title: {
         exists: {
             errorMessage: "Missing title."
