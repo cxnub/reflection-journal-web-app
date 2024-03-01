@@ -1,6 +1,6 @@
 const config = {
-    SECRET: "sejgn03u005nHBHI@(Nfnbfh9**bjiui",
-    EXPIRATION: "30 days"
+    SECRET: process.env.JWT_SECRET,
+    EXPIRATION: process.env.JWT_EXPIRATION || "30 days"
   };
   
   export default config;
