@@ -40,23 +40,6 @@ export async function getUserProfileById(
 }
 
 /**
- * Creates a new user profile.
- *
- * @param {UserProfile} data The user profile details
- */
-export async function createUserProfile(data: UserProfile) {
-  const conn = await connect();
-  const sql = `INSERT INTO ${dbTableName} (user_account_id, username, created_at, image_url) VALUES (?, ?, ?, ?)`;
-  const parameters = [
-    data.user_account_id,
-    data.username,
-    data.created_at,
-    data.image_url,
-  ];
-  return await conn.query(sql, [parameters]);
-}
-
-/**
  * Edits a user profile.
  *
  * @param {string} id The user account id
