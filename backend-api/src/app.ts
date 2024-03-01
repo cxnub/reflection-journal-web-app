@@ -22,6 +22,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/auth", authRouter);
 app.use("/api/journals", auth, journalRouter);
 app.use("/api/users", auth, userRouter);
+app.use("/api/comments", auth, journalRouter);
 
 app.use(function(req, res, next) {
   next(createHttpError(404));
