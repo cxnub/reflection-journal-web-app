@@ -28,3 +28,18 @@ export async function createComment(req: CustomRequest, res: express.Response, n
         next(error);
     }
 }
+
+export async function deleteComment(req: CustomRequest, res: express.Response, next: express.NextFunction) {
+    try {
+        const commentId = parseInt(req.params.id);
+        const success = await db.deleteComment(commentId);
+
+        if (success) {
+            res.status(204).end();
+        } else {
+            res.status(404).json({ message: "Comment not found" });
+        }
+    } catch (error) {
+        next(error);
+    }
+}

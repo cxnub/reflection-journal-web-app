@@ -31,3 +31,11 @@ SELECT * FROM ${dbTableName} WHERE id = LAST_INSERT_ID();
 
     return newComment;
 }
+
+export async function deleteComment(commentId: number): Promise<boolean> {
+    const conn = await connect();
+    const sql = `DELETE FROM ${dbTableName} WHERE id = ?`;
+    const result = await conn.query(sql, commentId);
+
+    return JSON.parse(JSON.stringify(result[0])).affectedRows === 1;
+}
