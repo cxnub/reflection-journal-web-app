@@ -30,7 +30,8 @@ export async function getUserProfileById(
   next: express.NextFunction
 ) {
   try {
-    const userProfile = await db.getUserProfileById(req.params.id);
+    const id = parseInt(req.params.id);
+    const userProfile = await db.getUserProfileById(id);
     if (!userProfile) {
       return res
         .status(404)
