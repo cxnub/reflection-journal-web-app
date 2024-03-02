@@ -19,7 +19,6 @@ SELECT * FROM user_profile WHERE user_account_id = ?;
 `;
 
     const result = await conn.query(sql, [userAccountId, username, image_url, userAccountId]);
-    console.log(typeof result[0])
 
     return new UserProfile(JSON.parse(JSON.stringify(result[0])));
 }
