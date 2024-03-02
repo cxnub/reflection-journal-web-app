@@ -1,10 +1,14 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const config = {
-  HOST: process.env.DB_HOST || "localhost",
-  PORT: parseInt(process.env.DB_PORT) || 3306,
-  USER: process.env.DB_USER || "root",
-  PASSWORD: process.env.DB_PASSWORD || "password",
-  DB: process.env.DB_NAME || "journal",
-  DIALECT: process.env.DB_DIALECT || "mysql",
+  HOST: process.env.DB_HOST,
+  PORT: parseInt(process.env.DB_PORT),
+  USER: process.env.DB_USER,
+  PASSWORD: process.env.DB_PASSWORD,
+  DB: process.env.DB_NAME,
+  DIALECT: process.env.DB_DIALECT,
   pool: {
     max: 5,
     min: 0,
