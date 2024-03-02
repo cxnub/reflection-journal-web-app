@@ -1,4 +1,4 @@
-import "./css/Login.css";
+import "./css/login.css";
 
 function Login() {
   return (
@@ -7,6 +7,7 @@ function Login() {
         <div className="row">
           <div className="col-md-6">
             <div className="picture-logo">
+              <img src="" width='240' height='240'></img>
               <p>This is place holder text</p>
             </div>
           </div>
@@ -45,13 +46,13 @@ function Login() {
                     Forgot Password?
                   </a>
                 </div>
-                <button type="submit" className="btn btn-light">
+                <hr className="line"></hr>
+                <button type="submit" className="btn btn-dark">
+                  Login
+                </button>
+                <button className="btn btn-dark" onClick={New_Account}>
                   Create Account
                 </button>
-                <button id="new_account" onClick={New_Account}>
-                  Create Account
-                </button>
-                {/*<button id ="login" onClick={MyButton}>Login</button>*/}
               </form>
             </div>
           </div>
