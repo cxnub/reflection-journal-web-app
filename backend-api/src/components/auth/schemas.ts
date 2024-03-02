@@ -2,6 +2,7 @@ import { Schema } from "express-validator";
 
 export const createUserAccountSchema: Schema = {
   email: {
+    escape: true,
     notEmpty: {
       errorMessage: "Email is required",
     },
@@ -25,6 +26,7 @@ export const createUserAccountSchema: Schema = {
     },
   },
   username: {
+    escape: true,
     exists: {
       errorMessage: "Username is required",
     },
@@ -37,6 +39,7 @@ export const createUserAccountSchema: Schema = {
     },
   },
   image_url: {
+    escape: true,
     exists: {
       errorMessage: "Image URL is required",
     },
@@ -48,6 +51,7 @@ export const createUserAccountSchema: Schema = {
 
 export const loginSchema: Schema = {
   email: {
+    escape: true,
     notEmpty: {
       errorMessage: "Email is required",
     },
