@@ -1,10 +1,10 @@
 import { Schema } from "express-validator";
 
 type UserAccountJson = {
-    id: number;
-    email: string;
-    hashed_password: string;
-    salt: string;
+    id?: number;
+    email?: string;
+    hashed_password?: string;
+    salt?: string;
 };
 
 export default class UserAccount {

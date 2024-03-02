@@ -11,10 +11,10 @@ import { Schema } from "express-validator";
  * 
  */
 export type LikeJson = {
-    id: number;
-    user_account_id: number;
-    journal_id: number;
-    created_at: string;
+    id?: number;
+    user_account_id?: number;
+    journal_id?: number;
+    created_at?: string;
 }
 
 /**
