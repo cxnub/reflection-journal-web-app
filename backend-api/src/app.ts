@@ -14,7 +14,7 @@ import { likeRouter } from "./components/likes/routes";
 dotenv.config();
 
 const key = fs.readFileSync("sslcert/selfsigned.key");
-const cert = fs.readFileSync("sslcert/selfsigned.cert");
+const cert = fs.readFileSync("sslcert/selfsigned.crt");
 const options = {
   key: key,
   cert: cert,
@@ -45,5 +45,5 @@ app.use(errorHandler);
 const server = https.createServer(options, app);
 
 server.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
+  console.log(`[server]: Server is running at https://localhost:${port}`);
 });
