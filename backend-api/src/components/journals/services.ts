@@ -40,12 +40,25 @@ export async function getAllJournalsByUserId(user_account_id: number): Promise<J
     }
 }
 
+export async function updateJournal(journal: Journal): Promise<Journal | null> {
+    const conn = await connect();
+
+    const sql = `UPDATE ${dbTableName} SET ` +
+    Array.from(Object.keys(journal)).map((key) => `${key} = ?`).join(", ") +
+    `edited_date = NOW() WHERE id = ?;` +
+    `SELECT * FROM ${dbTableName} WHERE id = ?;`;
+
+    const result = await conn.query(sql, [...Object.values(journal), journal.id, journal.id]);
+
+    return new Journal(JSON.parse(JSON.stringify(result[0][1][0])));
+}
+
 export async function createJournal(
     user_account_id: number,
     title: string,
     content: string,
     privacy_settings: number
-    ): Promise<Journal> {
+): Promise<Journal> {
     const conn = await connect();
 
     // get current date and time
@@ -60,4 +73,12 @@ SELECT * FROM ${dbTableName} WHERE id = LAST_INSERT_ID();
 
     const result = await conn.query(sql, [user_account_id, title, content, privacy_settings, created_at]);
     return new Journal(JSON.parse(JSON.stringify(result[0][1][0])));
+}
+
+export async function deleteJournal(journalId: number): Promise<boolean> {
+    const conn = await connect();
+    const sql = `DELETE FROM ${dbTableName} WHERE id = ?`;
+    const result = await conn.query(sql, journalId);
+
+    return JSON.parse(JSON.stringify(result[0])).affectedRows === 1;
 }

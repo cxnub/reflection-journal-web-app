@@ -14,6 +14,11 @@ export type LikeJson = {
   journal_id: number;
   created_at: string;
 };
+    id?: number;
+    user_account_id?: number;
+    journal_id?: number;
+    created_at?: string;
+}
 
 /**
  * The Like model.

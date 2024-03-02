@@ -17,6 +17,13 @@ export type JournalJson = {
   content: string;
   created_at: string;
   edited_at: string;
+  id?: number;
+  user_account_id?: number;
+  privacy_ref_id?: number;
+  title?: string;
+  content?: string;
+  created_at?: string;
+  edited_at?: string;
 };
 
 /**

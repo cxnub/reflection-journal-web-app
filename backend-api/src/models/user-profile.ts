@@ -9,10 +9,10 @@
  *
  */
 export type UserProfileJson = {
-  user_account_id: number;
-  username: string;
-  created_at: string;
-  image_url: string;
+  user_account_id?: number;
+  username?: string;
+  created_at?: string;
+  image_url?: string;
 };
 
 /**

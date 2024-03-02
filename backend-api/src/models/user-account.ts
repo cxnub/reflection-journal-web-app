@@ -13,6 +13,10 @@ type UserAccountJson = {
   email: string;
   hashed_password: string;
   salt: string;
+  id?: number;
+  email?: string;
+  hashed_password?: string;
+  salt?: string;
 };
 
 /**
