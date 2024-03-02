@@ -1,4 +1,6 @@
 import express, { Express, Request, Response } from "express";
+import https from "https";
+import fs from "fs";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import { authRouter } from "./components/auth/routes";
@@ -10,6 +12,13 @@ import { errorHandler } from "./middleware/error-handler";
 import { likeRouter } from "./components/likes/routes";
 
 dotenv.config();
+
+const key = fs.readFileSync("sslcert/selfsigned.key");
+const cert = fs.readFileSync("sslcert/selfsigned.cert");
+const options = {
+  key: key,
+  cert: cert,
+};
 
 const app: Express = express();
 const port = parseInt(process.env.PORT) || 3000;
@@ -32,6 +41,9 @@ app.use((_req, _res, next) => {
 
 app.use(errorHandler);
 
-app.listen(port, () => {
+
+const server = https.createServer(options, app);
+
+server.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
