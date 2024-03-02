@@ -1,6 +1,9 @@
 # env
 .env
 
+# ssl cert
+backend-api/sslcerts/*
+
 # Logs
 logs
 *.log
