@@ -45,3 +45,28 @@ export async function createJournal(req: CustomRequest, res: express.Response, n
         next(error);
     }
 }
+
+export async function updateJournal(req: CustomRequest, res: express.Response, next: express.NextFunction) {
+    try {
+        const journal = req.body;
+        const updatedJournal = await db.updateJournal(journal);
+        res.status(200).json(updatedJournal);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export async function deleteJournal(req: CustomRequest, res: express.Response, next: express.NextFunction) {
+    try {
+        const id = parseInt(req.params.id);
+        const success = await db.deleteJournal(id);
+
+        if (success) {
+            res.status(204).end();
+        } else {
+            res.status(404).json({ message: "Journal not found" });
+        }
+    } catch (error) {
+        next(error);
+    }
+}
