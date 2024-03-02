@@ -59,3 +59,23 @@ SELECT * FROM ${dbTableName} WHERE id = LAST_INSERT_ID();
 
     return newUserAccount;
 }
+
+export async function deleteUserAccount(
+    user_account_id: number
+): Promise<boolean> {
+    const conn = await connect();
+
+    const sql = `
+DELETE FROM user_profile WHERE user_account_id = ?;
+DELETE FROM ${dbTableName} WHERE id = ?;
+    `;
+
+    const result = await conn.query(sql, [user_account_id, user_account_id]);
+    const affectedRows = result[0][0].affectedRows + result[0][1].affectedRows;
+
+    if (affectedRows == 2) {
+        return true;
+    } else {
+        return false;
+    }
+}

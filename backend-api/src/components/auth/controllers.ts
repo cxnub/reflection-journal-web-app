@@ -56,3 +56,13 @@ export async function login(req: CustomRequest, res: express.Response, next: exp
             next(error);
         }
 }
+
+export async function deleteUserAccount(req: CustomRequest, res: express.Response, next: express.NextFunction) {
+    try {
+        const id = req.user_account_id;
+        const result = await db.deleteUserAccount(Number(id));
+        res.status(200).json({ status: "success", message: "User account deleted" });
+    } catch (error) {
+        next(error);
+    }
+}
