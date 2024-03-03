@@ -3,6 +3,7 @@ import https from "https";
 import fs from "fs";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
+import cors from "cors";
 import { authRouter } from "./components/auth/routes";
 import { journalRouter } from "./components/journals/routes";
 import { auth } from "./middleware/auth";
@@ -19,11 +20,16 @@ const options = {
   key: key,
   cert: cert,
 };
+const corsOptions = {
+  origin: "https://localhost:5173",
+  optionsSuccessStatus: 200,
+};
 
 const app: Express = express();
 const port = parseInt(process.env.PORT) || 3000;
 
 app.use(bodyParser.json());
+app.use(cors(corsOptions));
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
