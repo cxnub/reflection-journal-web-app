@@ -1,0 +1,122 @@
+@use "sass:math";
+@import "../node_modules/bootstrap/scss/bootstrap";
+// Returns a Material Design-style value level of a color, i.e. a multiple of
+// 100 in the range 100-900 inclusive.
+//
+// @param color $color
+// @return number - the color's value level
+@function color-level($color) {
+  @return min(max(round((100 - lightness($color) / 1%) / 10) * 100, 100), 900);
+}
+
+// Generates a map containing a full range of value steps.
+// - If one color is provided, that color is assigned to the closest value step
+// and other colors are generated automatically.
+// - If two colors are provided, both colors are assigned to their respective
+// closest value step and the value steps between are interpolated. Value steps
+// outside that range are generated automatically from the closest of the two
+// colors.
+//
+// @requires color-level
+// @param  color $color1
+// @param  color $color2 [null]
+// @return map - a map containing keys {100, 200, .., 900} and corresponding
+//               color values
+@function make-shades($color1, $color2: null) {
+  $level1: color-level($color1);
+  $shades: ();
+
+  @if (type-of($color2) != color) {
+    @for $i from 1 through 9 {
+      @if $i * 100 == $level1 {
+        $shades: map-merge($shades, ($i * 100: $color1));
+      } @else {
+        $shades: map-merge(
+          $shades,
+          ($i * 100: change-color($color1, $lightness: math.percentage(math.div(100-($i * 10), 100))))
+        );
+      }
+    }
+  } @else {
+    $level2: color-level($color2);
+
+    // We always want to work light-to-dark (100, 200, ..., 900)
+    @if $level2 < $level1 {
+      $tmp: $color1;
+      $color1: $color2;
+      $color2: $tmp;
+      $tmp: $level1;
+      $level1: $level2;
+      $level2: $tmp;
+    }
+
+    @if $level1 > 100 {
+      @for $i from 1 to $level1/100 {
+        $shades: map-merge(
+          $shades,
+          ($i * 100: change-color($color1, $lightness: 100-($i * 10)))
+        );
+      }
+    }
+    $shades: map-merge(
+      $shades,
+      (
+        $level1: $color1,
+      )
+    );
+    @for $i from $level1/100 + 1 to $level2/100 {
+      $weight: 100% - (($i - $level1/100) / ($level2/100 - $level1/100)) * 100%;
+      $shades: map-merge($shades, ($i * 100: mix($color1, $color2, $weight)));
+    }
+    $shades: map-merge(
+      $shades,
+      (
+        $level2: $color2,
+      )
+    );
+    @if $level2 < 900 {
+      @for $i from $level2/100 + 1 through 9 {
+        $shades: map-merge(
+          $shades,
+          ($i * 100: change-color($color2, $lightness: 100-($i * 10)))
+        );
+      }
+    }
+  }
+  @return $shades;
+}
+
+// Define the color palette
+$palette: (
+    text: make-shades(#151210),
+    background: make-shades(#d9967e),
+    primary: make-shades(#aa715c),
+    secondary: make-shades(#d9b2a4),
+    accent: make-shades(#d39078),
+  );
+
+@function palette-color($name, $level: 300) {
+  @return map-get(map-get($palette, $name), $level);
+}
+
+// Mixin to generate color shades
+@mixin generate-color-shades($name, $levels) {
+  $colorMap: map-get($palette, $name);
+  
+  @for $i from 1 through $levels {
+    $level: $i * 100;
+    $color: map-get($colorMap, $level);
+    .#{$name}-#{$level} {
+      background-color: $color;
+    }
+  }
+}
+
+@include generate-color-shades(text, 9);
+@include generate-color-shades(background, 9);
+@include generate-color-shades(primary, 9);
+@include generate-color-shades(secondary, 9);
+@include generate-color-shades(accent, 9);
+
+
+@import "../node_modules/bootstrap/scss/bootstrap";
