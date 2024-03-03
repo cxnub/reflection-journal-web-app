@@ -46,3 +46,26 @@ export async function getUserProfileById(
     next(error);
   }
 }
+
+export async function getUserProfileByUsername(
+  req: CustomRequest,
+  res: express.Response,
+  next: express.NextFunction
+) {
+  try {
+    const username = req.params.username;
+    const userProfile = await db.getUserProfileByUsername(username);
+    if (!userProfile) {
+      return res
+        .status(404)
+        .json({ status: "fail", message: "User profile not found" });
+    }
+    res.status(200).json({
+      status: "success",
+      message: "User profile fetched",
+      profile: userProfile,
+    });
+  } catch (error) {
+    next(error);
+  }
+}

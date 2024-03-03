@@ -40,6 +40,27 @@ export async function getUserProfileById(
 }
 
 /**
+ * Gets a user profile by username.
+ * 
+ * @param {string} username The username
+ * @returns {Promise<UserProfile | null>} Promise object represents the user profile if found, else `null`
+ * @example
+ * const userProfile = await getUserProfileByUsername("test");
+ */
+export async function getUserProfileByUsername(
+  username: string
+): Promise<UserProfile | null> {
+  const conn = await connect();
+  const sql = `SELECT * FROM ${dbTableName} WHERE username = ?`;
+  const result = await conn.query(sql, [username]);
+  if (Array.isArray(result[0]) && result[0].length > 0) {
+    return new UserProfile(JSON.parse(JSON.stringify(result[0][0])));
+  } else {
+    return null;
+  }
+}
+
+/**
  * Edits a user profile.
  *
  * @param {number} id The user account id

@@ -23,6 +23,26 @@ SELECT * FROM user_profile WHERE user_account_id = ?;
     return new UserProfile(JSON.parse(JSON.stringify(result[0])));
 }
 
+/**
+ * Check username availability.
+ * 
+ * @param {username} string The username to check.
+ * @returns {boolean} True if the username is available, false if it is not.
+ * @example
+ * const usernameAvailable = await usernameAvailable("test");
+ */
+export async function usernameAvailable(username: string): Promise<boolean> {
+    const conn = await connect();
+    const sql = `SELECT * FROM user_profile WHERE username = ?`;
+    const result = await conn.query(sql, [username]);
+
+    if (Array.isArray(result[0]) && result[0].length > 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 export async function getUserAccountByEmail(email: string): Promise<userAccount | null> {
     const conn = await connect();
     const sql = `SELECT * FROM ${dbTableName} WHERE email = ?`;

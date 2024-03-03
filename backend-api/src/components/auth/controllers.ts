@@ -10,7 +10,7 @@ export async function register(req: CustomRequest, res: express.Response, next: 
         const { email, password, username, image_url } = req.body;
 
         // Check if email is already in use
-        const account = await db.getUserAccountByEmail(email);
+        var account = await db.getUserAccountByEmail(email);
 
         // If email is already in use, return 400 status code
         if (account) {
@@ -18,14 +18,24 @@ export async function register(req: CustomRequest, res: express.Response, next: 
             return;
         }
 
+        // Check if username is already in use
+        const usernameAvailable = await db.usernameAvailable(username);
+
+        // If username is already in use, return 400 status code
+        if (!usernameAvailable) {
+            res.status(400).json({ message: "Sorry, username already in use" });
+            return;
+        }
+
         // If email is not in use, hash the password and create the user account
         const [salt, hashedPassword] = hashPassword(password);
 
-        await db.createUserAccount(email, hashedPassword, salt, username, image_url);
+        account = await db.createUserAccount(email, hashedPassword, salt, username, image_url);
 
         res.status(201).json({
             status: "success",
-            message: "User account created"
+            message: "User account created",
+            token: generateToken(account)
         });
     } catch (error) {
         next(error);
