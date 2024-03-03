@@ -21,7 +21,7 @@ function Login() {
               <form>
                 <div className="form-group">
                   <div>
-                    <label className="form-label text-white">Username:</label>
+                    <label className="form-label text-white">Email:</label>
                   </div>
                   <div>
                     <input
@@ -39,7 +39,7 @@ function Login() {
                   </div>
                   <div>
                     <input
-                      type="text"
+                      type="password"
                       id="password"
                       name="password"
                       placeholder="password"
