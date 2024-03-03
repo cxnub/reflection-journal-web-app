@@ -2,12 +2,10 @@ import "./login.css";
 
 function Login() {
   function New_Account() {
-    console.log("New Account button clicked");
     window.location.replace("http://localhost:5173/signup.html");
   }
   return (
     <>
-    {console.log("test")}
       <div className="container-fluid background-color-lightskin">
         <div className="row">
           <div className="col-md-6">

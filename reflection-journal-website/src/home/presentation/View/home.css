@@ -1,0 +1,65 @@
+.taskbar {
+    background-color: #d9967e;
+    padding: 2%;
+  }
+.navigation_button {
+    background-color: #d9967e;
+    border: transparent;
+    font-size: 32px;
+}
+.navigation_button:hover {
+    background-color: rgb(95, 123, 247)
+}
+#title {
+    color:white;
+    font-size: 28px;
+    padding-left: 5%;
+
+}
+.column_2{
+    background-color: white;
+    width: 46%;
+    border-radius: 30px;
+    height: 2.5rem;
+    margin: 10px 15px 0px;
+    display:flex;
+    align-items: center;
+    box-shadow: 0px 0px 8px #6c6c6c;
+}
+
+.search_bar{
+    background-color: transparent;
+    border: none;
+    margin-left: 5px;
+    font-size: 20px;
+    width:100%;
+}
+.search_bar:focus{
+    outline:none;
+}
+
+.search-button{
+    background-color: transparent;
+    padding: 3px 20px 2px 20px;
+    border-style: hidden hidden hidden solid;
+    border-width: 2px;
+    border-color: grey;
+}
+
+#search-icon{
+    color:grey;
+}
+
+.column_3-button {
+    background-color: #d9967e;
+    border: transparent;
+    font-size: 32px;
+}
+.column_3-button:hover {
+    background-color: rgb(95, 123, 247)
+}
+#image {
+    border-radius: 100px;
+    border-width: 2px;
+    border-style: solid;
+}
