@@ -24,6 +24,6 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
 
         next();
     } catch (err) {
-        res.status(401).json({ message: 'Please authenticate' });
+        res.status(401).json({ message: 'Invalid token' });
     }
 };
