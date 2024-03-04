@@ -123,10 +123,19 @@
   
   }
 
+html {
+  height: 100%;
+}
+
+#root {
+  min-height: 100vh;
+}
+
 body {
     background-color: var(--background-300);
     background-size: 10px 10px;
     background-image:
         linear-gradient(to right, var(--background-400) 1px, transparent 1px),
         linear-gradient(to bottom, var(--background-400) 1px, transparent 1px);
+    min-height: 100%;
 }

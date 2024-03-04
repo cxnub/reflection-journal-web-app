@@ -1,31 +1,48 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react";
 import { RenderNavbar } from "../components/structure/navbar/navbar.component";
 import { RenderRoutes } from "../components/structure/render-navigation";
 import { isTokenValid } from "../auth/data/api/validate-token.api";
 import { useNavigate } from "react-router-dom";
 
-const AuthContext = createContext(
-    {
-        user: { email: "", token: "", isAuthenticated: false },
-        authenticate: (email: string, token: string) => { },
-        logout: () => { }
-    }
-);
+const AuthContext = createContext({
+    user: { email: "", token: "", isAuthenticated: false },
+    authenticate: (email: string, token: string) => {},
+    logout: () => {},
+});
 export const AuthData = () => useContext(AuthContext);
 
-
 export const AuthWrapper = () => {
-
-    const [user, setUser] = useState({ email: "", token: "", isAuthenticated: false })
+    const [user, setUser] = useState({
+        email: "",
+        token: "",
+        isAuthenticated: false,
+    });
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            // If token exists in local storage, validate it
+            isTokenValid(token)
+                .then((authenticated) => {
+                    if (authenticated) {
+                        setUser({ email: "", token: token, isAuthenticated: true });
+                        navigate("/home");
+                    } else {
+                        logout();
+                    }
+                })
+                .catch(() => {
+                    logout();
+                });
+        }
+    }, []);
+
     const authenticate = async (email: string, token: string) => {
-        console.log("Authenticating user");
         const authenticated = await isTokenValid(token);
-        console.log("User authenticated: ", authenticated);
-        
+
         if (authenticated) {
-            console.log("User authenticated");
+            localStorage.setItem("token", token);
             setUser({ email: email, token: token, isAuthenticated: true });
             navigate("/home");
         }
@@ -36,29 +53,23 @@ export const AuthWrapper = () => {
             } else {
                 reject({ email: "", token: "", isAuthenticated: false });
             }
-        })
-    }
-    const logout = () => {
+        });
+    };
 
+    const logout = () => {
+        localStorage.removeItem("token");
         setUser({ email: "", token: "", isAuthenticated: false });
         navigate("/login");
-    }
-
+    };
 
     return (
-
         <AuthContext.Provider value={{ user, authenticate, logout }}>
             <>
                 {
-                // for testing purposes
-                // <RenderNavbar />
-                user.isAuthenticated && <RenderNavbar />
+                    user.isAuthenticated && <RenderNavbar />
                 }
                 <RenderRoutes />
             </>
-
         </AuthContext.Provider>
-
-    )
-
-}
+    );
+};
