@@ -5,7 +5,7 @@ import jwtConfig from '../config/jwt.config';
 function generateToken(account: UserAccount) {
     return jsonwebtoken.sign(
         {
-            id: account.id
+            user_account_id: account.id
         },
         jwtConfig.SECRET,
         {
