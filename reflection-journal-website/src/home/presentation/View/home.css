@@ -1,9 +1,13 @@
+.Homepage {
+    background-color: #d9967e
+}
+
 .taskbar {
-    background-color: #d9967e;
     padding: 2%;
+    margin:0;
   }
 .navigation_button {
-    background-color: #d9967e;
+    background-color: transparent;
     border: transparent;
     font-size: 32px;
 }
@@ -54,6 +58,7 @@
     background-color: #d9967e;
     border: transparent;
     font-size: 32px;
+    margin-left: 15%;
 }
 .column_3-button:hover {
     background-color: rgb(95, 123, 247)
@@ -62,4 +67,77 @@
     border-radius: 100px;
     border-width: 2px;
     border-style: solid;
+}
+
+.Nav_panel {
+    width: 80%;
+    background-color: white;
+    height: 82vh;
+    text-align: center;
+    padding:20px;
+}
+
+.discover_journals{
+    width: 95%;
+    overflow-y: auto;
+    background-color: white;
+    height: 82vh;
+    text-align: center;
+    padding:20px;
+}
+
+a {
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.Nav_buttons{
+    color: #6c6c6c;
+}
+
+.Nav_buttons:hover{
+    font-weight: bold;
+}
+
+hr{
+    border-top: 3px solid grey;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 3rem 0.75rem;
+    background-color: none;
+    list-style-type: none;
+    margin-bottom: 40px;
+    padding: 10px;
+  }
+
+.grid:hover{
+    box-shadow: black;
+}
+
+.journal_entry {
+    background-color:#f0f0f0;
+    height:40vh;
+}
+.journal_line{
+    width: 100%;
+}
+.journal_preview{
+    padding: 20px;
+    color: black;
+}
+.journal_text{
+    text-align: left;
+}
+
+.contactUs{
+    margin-top: 40px;
+    padding: 10px;
+    background-color: black;
+    width:100%;
+    height: 20vh;
+    color: white;
 }
