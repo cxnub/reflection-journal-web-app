@@ -4,16 +4,15 @@ import { Link } from "react-router-dom";
 import { UserRegisterBody, UserRegisterErrorResponse } from "../../../domain/entities/user.entity";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { register } from "../../../data/api/register.api";
-import useSignIn from "react-auth-kit/hooks/useSignIn";
 
 export default function RegisterForm() {
-    const signIn = useSignIn();
     const [formData, setFormData] = useState<UserRegisterBody>({ email: "", username: "", password: "", image_url: "default.png" });
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [errors, setErrors] = useState<string[]>([]);
     const [submitDisabled, setSubmitDisabled] = useState<boolean>(false);
     const [submitText, setSubmitText] = useState<string>("REGISTER");
     const [processing, setProcessing] = useState<boolean>(false);
+
 
     const handleRegister = (e: FormEvent) => {
         e.preventDefault();
@@ -27,12 +26,6 @@ export default function RegisterForm() {
             .then((response) => {
                 if (response.status === "success") {
                     setSubmitText("SUCCESS!");
-                    signIn({
-                        auth: {
-                            token: response.token,
-                            type: "Bearer"
-                        }
-                    });
                     window.location.href = "/home";
                 }
             })

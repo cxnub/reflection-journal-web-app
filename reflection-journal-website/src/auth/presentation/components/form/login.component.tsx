@@ -1,17 +1,18 @@
 import { Button, Card, Container, Form } from "react-bootstrap";
 import "./form.css";
 import { Link } from "react-router-dom";
-import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import { UserLoginBody, UserLoginErrorResponse } from "../../../domain/entities/user.entity";
 import { FormEvent, useState } from "react";
 import { login } from "../../../data/api/login.api";
+import { AuthData } from "../../../../wrappers/auth.wrapper";
 
 export default function LoginForm() {
-    const signIn = useSignIn();
     const [formData, setFormData] = useState<UserLoginBody>({email: "", password: ""});
     const [errors, setErrors] = useState<string[]>([]);
     const [submitDisabled, setSubmitDisabled] = useState<boolean>(false);
     const [submitText, setSubmitText] = useState<string>("LOGIN");
+
+    const { authenticate } = AuthData();
 
     const handleLogin = (e: FormEvent) => {
         e.preventDefault();
@@ -23,23 +24,15 @@ export default function LoginForm() {
             .then((response) => {
                 if (response.status === "success") {
                     setSubmitText("LOGGING IN...");
-                    signIn({
-                        auth: {
-                            token: response.token,
-                            type: "Bearer"
-                        }
-                    });
-                    window.location.href = "/home";
+                    authenticate(formData.email, response.token);
                 }
-                
-                
             })
             .catch((error) => {
                 if (error.response.status === 400) {
                     const response: UserLoginErrorResponse = error.response.data;
                     const errorMessages = response.errors.map((error) => error.msg);
                     setErrors([...errorMessages]);
-                } else if (error.response.status === 403) {
+                } else if (error.response.data.message) {
                     setErrors([error.response.data.message]);
                 }
                 setSubmitDisabled(false);

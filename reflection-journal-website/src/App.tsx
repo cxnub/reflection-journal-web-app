@@ -1,15 +1,16 @@
-
-
-
-
+import { BrowserRouter } from 'react-router-dom';
+import './App.css';
+import { AuthWrapper } from './wrappers/auth.wrapper';
 
 
 function App() {
-    
-    return (
-        <div className="app">
-        </div>
-    );
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <AuthWrapper />
+      </BrowserRouter>      
+    </div>
+  );
 }
 
 export default App;
