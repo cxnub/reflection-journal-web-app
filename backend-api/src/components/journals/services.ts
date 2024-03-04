@@ -3,15 +3,10 @@ import { Journal, JournalJson } from "../../models/journal";
 const dbTableName = "journal";
 
 export async function getJournalById(id: number): Promise<Journal | null> {
-    var result = null;
-    try {
-        const conn = await connect();
-        const sql = `SELECT * FROM ${dbTableName} WHERE id = ?`;
-        result = await conn.query(sql, [id]);
-        console.log("result", result);
-    } catch (error) {
-        throw new error;
-    }
+
+    const conn = await connect();
+    const sql = `SELECT * FROM ${dbTableName} WHERE id = ?`;
+    var result = await conn.query(sql, [id]);
 
     if (Array.isArray(result[0]) && result[0].length > 0) {
         return new Journal(JSON.parse(JSON.stringify(result[0][0])));
@@ -26,15 +21,14 @@ export async function getAllJournalsByUserId(user_account_id: number): Promise<J
         const conn = await connect();
         const sql = `SELECT * FROM ${dbTableName} WHERE user_account_id = ?`;
         result = await conn.query(sql, [user_account_id]);
-        console.log("result", result);
+
     } catch (error) {
         console.error("Error executing query", error);
-        throw new error;
+        throw error;
     }
 
     if (Array.isArray(result[0]) && result[0].length > 0) {
-        var journalJsons = Array(JSON.parse(JSON.stringify(result[0])));
-        return journalJsons.map((journalJson) => new Journal(journalJson));
+        return result[0];
     } else {
         return null;
     }

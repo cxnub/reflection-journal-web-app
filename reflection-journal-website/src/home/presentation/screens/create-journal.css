@@ -1,0 +1,59 @@
+.create-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  max-width: 900px;
+  width: 900px;
+}
+
+.create-input, .create-input:focus {
+    background: transparent;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.content-input {
+    max-height: 300px;
+    height: 300px;
+    font-size: larger;
+}
+
+.private-switch:hover {
+    cursor: pointer;
+}
+
+.private-switch, .private-switch:active, .private-switch:focus, .private-switch:hover, .private-switch:focus-visible{
+    width: 60px !important;
+    height: 30px !important;
+    background-color: var(--primary-100) !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.private-switch:after, .private-switch:checked {
+    background-color: var(--primary-500) !important;
+}
+
+.create-btn {
+    background-color: var(--primary-500);
+    color: var(--text-100);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.create-btn:hover, .create-btn:focus, .create-btn:active, .create-btn:focus-visible, .create-btn:disabled {
+    background-color: var(--primary-600) !important;
+    box-shadow: none !important;
+    border: none;
+}

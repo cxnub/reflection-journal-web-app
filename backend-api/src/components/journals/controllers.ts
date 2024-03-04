@@ -18,9 +18,8 @@ export async function getJournalById(req: CustomRequest, res: express.Response, 
 }
 
 export async function getAllJournalsByUserId(req: CustomRequest, res: express.Response, next: express.NextFunction) {
-
     try {
-        const id = parseInt(req.params.id);
+        const id = req.user_account_id;
         const journals = await db.getAllJournalsByUserId(id);
 
         if (journals) {
