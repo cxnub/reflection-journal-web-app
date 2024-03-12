@@ -1,9 +1,10 @@
 export interface Journal {
-    id: number;
-    user_account_id: number;
-    privacy_ref_id: number;
+    id?: number;
+    user_account_id?: number;
+    username?: string;
+    privacy_settings: number;
     title: string;
     content: string;
-    created_at: string;
-    edited_at: string;
+    created_at?: string;
+    edited_at?: string;
 }

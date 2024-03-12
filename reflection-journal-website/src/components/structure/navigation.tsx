@@ -1,7 +1,7 @@
 import LoginScreen from "../../auth/presentation/screens/login.screen";
 import RegisterScreen from "../../auth/presentation/screens/register.screen";
-import { CreateJournal } from "../../home/presentation/screens/create-journal.screen";
-import { Home } from "../../home/presentation/screens/home.screen";
+import { CreateJournal } from "../../home/presentation/screens/create-journal/create-journal.screen";
+import { Home } from "../../home/presentation/screens/home/home.screen";
 
 export const nav = [
     { path: "/", name: "Home", element: <h1>Landing</h1>, isMenu: false, isPrivate: false },

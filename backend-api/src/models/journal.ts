@@ -55,6 +55,7 @@ export type JournalJson = {
 export class Journal {
   id: number;
   user_account_id: number;
+  username: string;
   title: string;
   content: string;
   created_at: string;

@@ -1,0 +1,10 @@
+.card-btn, .card-btn:active, .card-btn:focus {
+    background-color: transparent !important;
+    border: transparent !important;
+    color: var(--primary-700) !important;
+}
+
+.card-btn:hover, .card-btn:focus-visible, .card-btn:hover, .card-btn:focus-visible {
+    background-color: var(--background-700);
+    color: var(--primary-500) !important;
+}

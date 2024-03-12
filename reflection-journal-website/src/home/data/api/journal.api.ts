@@ -7,3 +7,9 @@ export async function getAllUserJournals(): Promise<Journal[]> {
     const journals: Journal[] = result.data;
     return journals;
 }
+
+export async function createJournal(journal: Journal): Promise<Journal> {
+    console.log(journal);
+    const result = await axios.post(`/api/journals`, journal, axiosConfig);
+    return result.data;
+}

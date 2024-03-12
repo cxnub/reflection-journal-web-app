@@ -17,7 +17,7 @@ export const RenderNavbar = () => {
     return (
         <>
             <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-            <Navbar className="navbar navbar-expand-lg sticky-top">
+            <Navbar className="navbar navbar-expand-lg sticky-top p-0">
                 <div className="container-fluid navbar-container p-0">
                     <div className="col col-4 d-flex align-items-center">
                         <Button className="sidebar-btn navbar-btn ms-4" onClick={() => setShowSidebar(!showSidebar)}>
@@ -27,9 +27,9 @@ export const RenderNavbar = () => {
                     </div>
                     <div className="col col-4">
                         <div className="w-100">
-                            <div className="input-group search-input-group">
+                            <div className="input-group search-input-group search-bar">
                                 <input
-                                    className="form-control border-end-0 border search-bar"
+                                    className="form-control border-end-0 border search-input"
                                     type="text"
                                     placeholder="Search..."
                                     value={search}
@@ -52,14 +52,14 @@ export const RenderNavbar = () => {
                         </div>
                     </div>
                     <div className="col col-4 d-flex justify-content-end">
-                        <Button className="add-journal-btn navbar-btn" onClick={() => navigate("/create_journal")}>
-                            <i className="bi bi-plus-square navbar-icon fs-4 me-4 ps-2 pe-2"></i>
+                        <Button className="add-journal-btn navbar-btn ms-2 me-2 ps-3 pe-3" onClick={() => navigate("/create_journal")}>
+                            <i className="bi bi-plus-square navbar-icon fs-4"></i>
                         </Button>
-                        <Button className="notification-btn navbar-btn">
-                            <i className="bi bi-bell navbar-icon fs-4 me-4 ps-2 pe-2"></i>
+                        <Button className="notification-btn navbar-btn ms-2 me-2 ps-3 pe-3">
+                            <i className="bi bi-bell navbar-icon fs-4"></i>
                         </Button>
                         <Dropdown className="dropdown-container">
-                            <Dropdown.Toggle className="caret-off profile-btn navbar-btn me-4 ps-2 pe-2">
+                            <Dropdown.Toggle className="caret-off profile-btn navbar-btn ms-2 me-4 ps-3 pe-3">
                                 <i className="bi bi-person-circle fs-1 m-0 p-0"></i>
                             </Dropdown.Toggle>
                             <Dropdown.Menu className="profile-menu">

@@ -11,6 +11,7 @@ import { userRouter } from "./components/users/routes";
 import createHttpError from "http-errors";
 import { errorHandler } from "./middleware/error-handler";
 import { likeRouter } from "./components/likes/routes";
+import path from "path";
 
 dotenv.config();
 
@@ -31,9 +32,9 @@ const port = parseInt(process.env.PORT) || 3000;
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
-app.get("/", (_req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
-});
+// app.get("*", (_req: Request, res: Response) => {
+//   res.sendFile("public/index.html");
+// });
 
 app.use("/api/auth", authRouter);
 app.use("/api/journals", auth, journalRouter);
@@ -41,11 +42,17 @@ app.use("/api/users", auth, userRouter);
 app.use("/api/comments", auth, journalRouter);
 app.use("/api/likes", auth, likeRouter);
 
+// frontend
+// app.use("/assets", express.static(path.resolve(__dirname, "../public/assets")));
+// app.get('/*', function (request, response) {
+//   response.sendFile(path.resolve(__dirname, '../public/index.html'));
+// });
+
 app.use((_req, _res, next) => {
   next(createHttpError(404));
 });
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 
 const server = https.createServer(options, app);

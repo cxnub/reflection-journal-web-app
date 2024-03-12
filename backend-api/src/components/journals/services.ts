@@ -19,7 +19,12 @@ export async function getAllJournalsByUserId(user_account_id: number): Promise<J
     var result = null;
     try {
         const conn = await connect();
-        const sql = `SELECT * FROM ${dbTableName} WHERE user_account_id = ?`;
+        const sql = `
+SELECT *
+FROM ${dbTableName}
+INNER JOIN user_profile ON user_profile.user_account_id = journal.user_account_id
+WHERE journal.user_account_id = ?;
+        `;
         result = await conn.query(sql, [user_account_id]);
 
     } catch (error) {

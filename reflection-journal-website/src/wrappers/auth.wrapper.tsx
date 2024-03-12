@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext({
     user: { email: "", token: "", isAuthenticated: false },
-    authenticate: (email: string, token: string) => {},
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    authenticate: (_email: string, _token: string) => {},
     logout: () => {},
 });
 export const AuthData = () => useContext(AuthContext);
@@ -43,6 +44,8 @@ export const AuthWrapper = () => {
 
         if (authenticated) {
             localStorage.setItem("token", token);
+            // refresh web page
+            window.location.reload();
             setUser({ email: email, token: token, isAuthenticated: true });
             navigate("/home");
         }
@@ -58,6 +61,8 @@ export const AuthWrapper = () => {
 
     const logout = () => {
         localStorage.removeItem("token");
+        // refresh web page
+        window.location.reload();
         setUser({ email: "", token: "", isAuthenticated: false });
         navigate("/login");
     };

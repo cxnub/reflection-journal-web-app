@@ -1,3 +1,5 @@
+import "./sidebar.css";
+
 type SidebarProps = {
     showSidebar: boolean;
     setShowSidebar: (showSidebar: boolean) => void;
@@ -6,7 +8,7 @@ type SidebarProps = {
 export default function Sidebar(props: SidebarProps) {
     const { showSidebar, setShowSidebar } = props;
     return (
-        <div className={"offcanvas offcanvas-start " + (showSidebar ? "show": "hide")} tabIndex={-1} id="offcanvas" aria-labelledby="offcanvasLabel">
+        <div className={"offcanvas offcanvas-start h-auto " + (showSidebar ? "show": "hide")} tabIndex={-1} id="offcanvas" aria-labelledby="offcanvasLabel">
             <div className="offcanvas-header">
                 <h5 className="offcanvas-title" id="offcanvasLabel">Offcanvas</h5>
                 <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" onClick={() => setShowSidebar(!showSidebar)}></button>
